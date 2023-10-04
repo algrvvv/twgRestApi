@@ -47,7 +47,7 @@ response:
             "created_at": "2023-10-04T15:33:17.000000Z"
         },
 
-        // other posts
+        .. other posts
     ]
 }
 ```
