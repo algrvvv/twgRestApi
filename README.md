@@ -1,66 +1,122 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# TailwindGram Laravel Rest API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+a written rest api based on my other Tailwindgram project.
 
-## About Laravel
+> the project uses sanctum api tokens
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## register and log in to your account
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+request: `http://sitename/api/login?email=yspinka@example.com&password=password`
+response:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```json
+{
+    "message": "Welcome back, amber.klein!",
+    "token": "generated api-token"
+}
+```
+request: `http://sitename/api/login?email=example@example.com&password=password&username=example`
+response:
 
-## Learning Laravel
+```json
+{
+    "message": "User created successfully",
+    "token": "generated api-token"
+}
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+>when generating tokens, the role of the user is taken into account and, in accordance with it, a token is issued that is endowed with one or another persmission
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+briefly on its functionality:
 
-## Laravel Sponsors
+## Getting all approved posts
+that is, to see the post you need approval from the admin. 
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+request: `http://sitename/api/posts/`
+response:
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "title": "Pariatur non quibusdam qui.",
+            "content": "Doloremque aut consequatur saepe pariatur culpa. Sit magni sunt tenetur consequatur id a. Ea qui autem fugiat qui ad est similique.",
+            "views": "0",
+            "author": "amber.klein",
+            "created_at": "2023-10-04T15:33:17.000000Z"
+        },
 
-### Premium Partners
+        // other posts
+    ]
+}
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Getting a certain post
 
-## Contributing
+request: `http://sitename/api/posts/1`
+response:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```json
+{
+    "data": {
+        "id": 1,
+        "title": "Pariatur non quibusdam qui.",
+        "content": "Doloremque aut consequatur saepe pariatur culpa. Sit magni sunt tenetur consequatur id a. Ea qui autem fugiat qui ad est similique.",
+        "views": "0",
+        "author": "amber.klein",
+        "created_at": "2023-10-04T15:33:17.000000Z"
+    }
+}
+```
 
-## Code of Conduct
+## Getting all comments on a post
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+request: `http://sitename/api/posts/1?comments=true`
+response:
+```json
+{
+    "data": {
+        "id": 1,
+        "title": "Pariatur non quibusdam qui.",
+        "content": "Doloremque aut consequatur saepe pariatur culpa. Sit magni sunt tenetur consequatur id a. Ea qui autem fugiat qui ad est similique.",
+        "views": "0",
+        "author": "amber.klein",
+        "created_at": "2023-10-04T15:33:17.000000Z",
+        "comments": [
+            {
+                "id": 1,
+                "post_id": 1,
+                "author": "dbraun",
+                "title": "ullam et similique iusto ducimus aut",
+                "content": "Tenetur id quam nulla ad deleniti a voluptas. Quia temporibus earum tenetur dolorem corrupti dolor et. Explicabo omnis commodi quia veniam dolorem placeat et. Nam vitae fuga non expedita dolor eaque in. Cumque libero velit qui in incidunt.",
+                "created_at": "2023-10-04T15:33:18.000000Z"
+            }
+        ]
+    }
+}
+```
 
-## Security Vulnerabilities
+>the display of comments can be used during the output of all posts, simply using the same query
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Admin approval of the post
 
-## License
+>to do this, you need to have a token that has the necessary permissions and send a PATH request with the header `access = 1`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+request: `http://sitename/api/posts/6?access=1`
+
+in case of success, response:
+```json
+{
+    "message": "post has been publishing"
+}
+```
+otherwise:
+
+```json
+{
+    "message": "Invalid ability provided.",
+}
+```
+
+>after that, the post will be visible on request `http://sitename/api/posts/`
