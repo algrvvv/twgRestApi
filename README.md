@@ -44,6 +44,8 @@ response:
 
 >when generating tokens, the role of the user is taken into account and, in accordance with it, a token is issued that is endowed with one or another persmission
 
+>after logging in to your account, [approve any post](#admin-approval-of-the-post)
+
 
 briefly on its functionality:
 
