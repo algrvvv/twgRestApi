@@ -23,7 +23,7 @@ php artisan migrate --seed
 
 ## register and login to your account
 
-request: `http://sitename/api/login?email=admin@example.com&password=password`<br>
+`POST` request: `http://sitename/api/login?email=admin@example.com&password=password`<br>
 response:
 
 ```json
@@ -32,7 +32,7 @@ response:
     "token": "generated api-token"
 }
 ```
-request: `http://sitename/api/register?email=example@example.com&password=password&username=example`<br>
+`POST` request: `http://sitename/api/register?email=example@example.com&password=password&username=example`<br>
 response:
 
 ```json
@@ -52,7 +52,7 @@ briefly on its functionality:
 ## Getting all approved posts
 that is, to see the post you need approval from the admin. 
 
-request: `http://sitename/api/posts/`<br>
+`GET` request: `http://sitename/api/posts/`<br>
 response:
 ```json
 {
@@ -73,7 +73,7 @@ response:
 
 ## Getting a certain post
 
-request: `http://sitename/api/posts/1`<br>
+`GET` request: `http://sitename/api/posts/1`<br>
 response:
 
 ```json
@@ -91,7 +91,7 @@ response:
 
 ## Getting all comments on a post
 
-request: `http://sitename/api/posts/1?comments=true`<br>
+`GET` request: `http://sitename/api/posts/1?comments=true`<br>
 response:
 ```json
 {
@@ -122,7 +122,7 @@ response:
 
 >to do this, you need to have a token that has the necessary permissions and send a PATH request with the header `access = 1`
 
-request: `http://sitename/api/posts/6?access=1` <br>
+`PATH` request: `http://sitename/api/posts/6?access=1` <br>
 
 in case of success, response:
 ```json
@@ -142,7 +142,7 @@ otherwise:
 
 ## Adding comments
 
-request: `http://sitename/api/posts/2/comment?title=title&content=content` <br>
+`POST` request: `http://sitename/api/posts/2/comment?title=title&content=content` <br>
 response:
 
 ```json
@@ -162,7 +162,7 @@ response:
 
 ## Deleting posts
 
-request: `http://sitename/api/posts/3` <br>
+`DELETE `request: `http://sitename/api/posts/3` <br>
 in case of success, response:
 
 ```json
