@@ -6,7 +6,7 @@ a written rest api based on my other Tailwindgram project.
 
 ## register and log in to your account
 
-request: `http://sitename/api/login?email=yspinka@example.com&password=password`<br>
+request: `http://sitename/api/register?email=yspinka@example.com&password=password`<br>
 response:
 
 ```json
