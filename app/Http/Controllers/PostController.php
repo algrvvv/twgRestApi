@@ -6,6 +6,10 @@ use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostResource;
+use App\Http\Requests\createCommentRequest;
+use App\Http\Resources\CommentResource;
+use App\Models\Comment;
+use Illuminate\Http\Request;
 use Throwable;
 
 class PostController extends Controller
@@ -19,7 +23,7 @@ class PostController extends Controller
 
         $inc_comm = request('comments');
 
-        if($inc_comm){
+        if ($inc_comm) {
             return PostResource::collection($posts->with('comments')->get());
         }
 
@@ -48,11 +52,11 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $access = $post->access;
-        
+
         $inc_comm = request('comments');
 
-        if($access){
-            if($inc_comm){
+        if ($access) {
+            if ($inc_comm) {
                 return new PostResource($post->loadMissing('comments'));
             }
 
@@ -61,8 +65,7 @@ class PostController extends Controller
 
         return response()->json([
             'message' => 'Post not found'
-        ],401);
-
+        ], 401);
     }
 
     /**
@@ -78,14 +81,13 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        try{
+        try {
             $post->update($request->all());
             return response()->json([
                 'message' => 'post has been publishing',
                 // 'role' => auth()->user()->role
             ], 200);
-        }
-        catch (Throwable $th) {
+        } catch (Throwable $th) {
             return response()->json([
                 'errors' => $th->getMessage()
             ], 401);
@@ -97,6 +99,36 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+
+        $user = auth()->user();
+        
+        if ($user->tokenCan('post:update', 'post:delete')) {
+            try {
+                $res = $post->delete();
+                if ($res) {
+                    return response()->json([
+                        'message' => 'post has been deleted'
+                    ], 200);
+                }
+
+                return response()->json([
+                    'message' => 'post has not been deleted'
+                ], 401);
+            } catch (Throwable $th) {
+                return response()->json([
+                    'errors' => $th->getMessage()
+                ], 401);
+            }
+        }
+
+        return response()->json([
+            'message' => 'you dont have a permisson'
+        ]);
+    }
+
+    public function createComment(createCommentRequest $request, $id){
+        return new CommentResource(Comment::create(array_merge($request->all(), [
+            'post_id' => $id, 'user_id' => auth()->user()->id
+        ])));
     }
 }

@@ -6,7 +6,7 @@ a written rest api based on my other Tailwindgram project.
 
 ## register and log in to your account
 
-request: `http://sitename/api/login?email=yspinka@example.com&password=password`
+request: `http://sitename/api/login?email=yspinka@example.com&password=password`<br>
 response:
 
 ```json
@@ -15,7 +15,7 @@ response:
     "token": "generated api-token"
 }
 ```
-request: `http://sitename/api/login?email=example@example.com&password=password&username=example`
+request: `http://sitename/api/login?email=example@example.com&password=password&username=example`<br>
 response:
 
 ```json
@@ -33,7 +33,7 @@ briefly on its functionality:
 ## Getting all approved posts
 that is, to see the post you need approval from the admin. 
 
-request: `http://sitename/api/posts/`
+request: `http://sitename/api/posts/`<br>
 response:
 ```json
 {
@@ -54,7 +54,7 @@ response:
 
 ## Getting a certain post
 
-request: `http://sitename/api/posts/1`
+request: `http://sitename/api/posts/1`<br>
 response:
 
 ```json
@@ -72,7 +72,7 @@ response:
 
 ## Getting all comments on a post
 
-request: `http://sitename/api/posts/1?comments=true`
+request: `http://sitename/api/posts/1?comments=true`<br>
 response:
 ```json
 {
@@ -103,7 +103,7 @@ response:
 
 >to do this, you need to have a token that has the necessary permissions and send a PATH request with the header `access = 1`
 
-request: `http://sitename/api/posts/6?access=1`
+request: `http://sitename/api/posts/6?access=1` <br>
 
 in case of success, response:
 ```json
@@ -120,3 +120,42 @@ otherwise:
 ```
 
 >after that, the post will be visible on request `http://sitename/api/posts/`
+
+## Adding comments
+
+request: `http://sitename/api/posts/2/comment?title=title&content=content` <br>
+response:
+
+```json
+{
+    "data": {
+        "id": 25,
+        "post_id": "2",
+        "author": "username",
+        "title": "title",
+        "content": "content",
+        "created_at": "2023-10-05T07:47:35.000000Z"
+    }
+}
+```
+
+>it is important to have a token that has the authority to create comments
+
+## Deleting posts
+
+request: `http://sitename/api/posts/3` <br>
+in case of success, response:
+
+```json
+{
+    "message": "post has been deleted"
+}
+```
+
+otherwise:
+
+```json
+{
+    "message": "you dont have a permisson"
+}
+```
