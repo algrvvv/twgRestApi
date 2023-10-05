@@ -16,18 +16,19 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'username' => 'test.user',
-        //     'email' => 'test@example.com',
-        // ]);
-
+        \App\Models\User::factory()->create([
+            'username' => 'admin',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('password'),
+            'role' => 'admin'
+        ]);
 
         User::factory()
             ->count(10)
             ->hasPosts(3)
             ->create();
         
-        // Comment::factory(15)->create();
+        Comment::factory(15)->create();
         // Comment::factory()->create([
         //     'post_id' => 1,
         //     'user_id' => 51,

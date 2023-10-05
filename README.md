@@ -4,14 +4,31 @@ a written rest api based on my other Tailwindgram project.
 
 > the project uses sanctum api tokens
 
+## Installation
+
+First clone this repository, install the dependencies, and setup your .env file.
+
+```
+git clone git@github.com:algrvvv/twgRestApi.git blog
+composer install
+cp .env.example .env
+```
+
+Then create the necessary database. <br>
+And run the initial migrations and seeders.
+
+```
+php artisan migrate --seed
+```
+
 ## register and login to your account
 
-request: `http://sitename/api/login?email=yspinka@example.com&password=password`<br>
+request: `http://sitename/api/login?email=admin@example.com&password=password`<br>
 response:
 
 ```json
 {
-    "message": "Welcome back, amber.klein!",
+    "message": "Welcome back, admin!",
     "token": "generated api-token"
 }
 ```

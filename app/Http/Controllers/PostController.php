@@ -21,13 +21,21 @@ class PostController extends Controller
     {
         $posts = Post::where('access', true);
 
-        $inc_comm = request('comments');
+        $res = PostResource::collection($posts->get());
 
-        if ($inc_comm) {
-            return PostResource::collection($posts->with('comments')->get());
+        if (count($res)) {
+            $inc_comm = request('comments');
+
+            if ($inc_comm) {
+                return PostResource::collection($posts->with('comments')->get());
+            }
+
+            return $res;
         }
 
-        return PostResource::collection($posts->get());
+        return response()->json([
+            'message' => 'there is not a single approved post'
+        ], 200);
     }
 
     /**
@@ -101,7 +109,7 @@ class PostController extends Controller
     {
 
         $user = auth()->user();
-        
+
         if ($user->tokenCan('post:update', 'post:delete')) {
             try {
                 $res = $post->delete();
@@ -126,7 +134,8 @@ class PostController extends Controller
         ]);
     }
 
-    public function createComment(createCommentRequest $request, $id){
+    public function createComment(createCommentRequest $request, $id)
+    {
         return new CommentResource(Comment::create(array_merge($request->all(), [
             'post_id' => $id, 'user_id' => auth()->user()->id
         ])));
