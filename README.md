@@ -4,9 +4,9 @@ a written rest api based on my other Tailwindgram project.
 
 > the project uses sanctum api tokens
 
-## register and log in to your account
+## register and login to your account
 
-request: `http://sitename/api/register?email=yspinka@example.com&password=password`<br>
+request: `http://sitename/api/login?email=yspinka@example.com&password=password`<br>
 response:
 
 ```json
@@ -15,7 +15,7 @@ response:
     "token": "generated api-token"
 }
 ```
-request: `http://sitename/api/login?email=example@example.com&password=password&username=example`<br>
+request: `http://sitename/api/register?email=example@example.com&password=password&username=example`<br>
 response:
 
 ```json
